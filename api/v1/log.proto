@@ -1,0 +1,36 @@
+syntax = "proto3"; 
+package log.v1 ; 
+option go_package = "github.com/abdelwhab-1/learning/distservices/proglog/api_v1"; 
+
+
+message Record{
+    bytes   value = 1; 
+    uint64  offset = 2; 
+}
+
+service log {
+
+    rpc Produce(ProduceRequest) returns (ProduceResponse){}
+    rpc Consume(ConsumeRequest) returns (ConsumeResponse){}
+    rpc ProduceStream(stream ProduceRequest) returns (stream ProduceResponse){}
+    rpc ConsumeStream( ConsumeRequest) returns (stream ConsumeResponse){}
+
+}
+
+
+
+message ProduceRequest{
+    Record  record = 1; 
+}
+
+message ConsumeRequest{
+    uint64  offSet = 1; 
+}
+
+message ProduceResponse { 
+    uint64  offSet = 1; 
+}
+
+message ConsumeResponse {
+    Record  record = 1; 
+}
